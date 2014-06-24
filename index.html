@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>test</title>
+        <meta charset="utf-8" />
+        <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+        <script type="text/javascript" src="js/yelin-dialog.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/reset.css" />
+        <link rel="stylesheet" type="text/css" href="css/yelin-dialog.css" />
+        <link rel="stylesheet" type="text/css" href="css/ir_black.css" />
+        <script type="text/javascript" src="js/highlight.pack.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        <style>
+            .wrapper{width: 1100px;margin: 50px auto;}
+            .dialog-button-wrapper{margin-bottom:20px;text-align: center;}
+            .tips-button-wrapper{text-align: center;}
+            .dialog-button-wrapper h1,
+            .tips-button-wrapper h1{margin:10px 200px;border-bottom:1px solid #c1c1c1; padding:8px;}
+            .example-block{width:500px; text-align:left; margin: 0 auto 10px; padding:5px; border:1px solid #a1a1a1; border-radius: 5px;}
+            .example-block button{padding:3px 6px;}
+            .example-block pre{font-size:12px;margin:0;padding:0;line-height:1.3;}
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="dialog-button-wrapper">
+            <h1>Some demos of ydialog</h1>
+<div class="example-block">
+<pre>
+    <code>
+$('#button_1').ydialog();
+    </code>
+</pre>
+<button id="button_1">default dialog</button>
+</div>
+
+<div class="example-block">
+<pre>
+    <code>
+$('#button_2').ydialog({
+    vEvent : 'dblclick',
+    simple: true
+});
+    </code>
+</pre>
+<button id="button_2">simple warn dialog appear when dobule click</button>
+</div>
+
+<div class="example-block">
+<pre>
+    <code>
+$('#button_3').ydialog({
+    type : 'alert',
+    simple : true,
+    danger : true,
+    dragable : false,
+    lock : false
+});
+    </code>
+</pre>
+<button id="button_3">simple danger alert no lock undragable</button>
+</div>
+
+<div class="example-block">
+<pre>
+    <code>
+$('#button_4').ydialog({
+    title : '加入回调的弹窗',
+    content : '&lt;div style="padding:10px 30px;"&gt;&lt;ul style="list-style:
+                disc inside none;"&gt;&lt;li&gt;确定按钮按下执行ok与close回调，
+                返回false阻止弹窗关闭&lt;/li&gt;&lt;li&gt;取消按钮按下执行cancel
+                与close回调，返回false阻止弹窗关闭&lt;/li&gt;&lt;li&gt;右上角的X
+                按下执行close回调，返回false阻止弹窗关闭&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;',
+    ok : function(){
+        alert('你点击了确定按钮，回调返回false，弹窗不会关闭！');
+        return false;
+    },
+    cancel : function(){
+        alert('you clicked cancel');
+    },
+    close : function(){
+        alert('dialog will closed');
+    }
+});
+    </code>
+</pre>
+<button id="button_4">dialog with callbacks</button>
+</div>
+
+<div class="example-block">
+<pre>
+    <code>
+$('#button_5').ydialog({
+    title : '自定义按钮文字',
+    simple : true,
+    time : 5,
+    position : 'absolute',
+    okText : 'Click to confirm',
+    cancelText : 'Click to cancel',
+    content : '这个弹窗拥有自定义按钮文字，并且是绝对定位的，5秒后会自动关闭！'
+});
+    </code>
+</pre>
+<button id="button_5">dialog with custom button text and auto close</button>
+</div>
+
+<div class="example-block">
+<pre>
+    <code>
+$('#button_6').ydialog({
+    title : '加入init方法的弹窗',
+    content : '弹窗出现后会执行init方法，这在需要弹窗同时发送ajax请求并等待回调
+                时非常合适。本例在弹窗出现3秒后alert',
+    init: function(){
+        setTimeout(function(){
+            alert('do something here');
+        }, 3000);
+    }
+});
+    </code>
+</pre>
+<button id="button_6">dialog with custom button text</button>
+</div>
+
+            </div>
+            <div class="tips-button-wrapper">
+                <h1>Some demos of yfixtips</h1>
+<div class="example-block">
+<pre>
+    <code>
+$('.tips-button-wrapper').on('click', 'button', function(){
+    var el = $(this);
+    switch(el.attr('id')){
+        case 'button_00':
+            $.yfixtips();
+            break;
+        case 'button_11':
+            $.yfixtips({
+                position: 'center'
+            });
+            break;
+        case 'button_22':
+            $.yfixtips({
+                position: 'right-top'
+            });
+            $.yfixtips
+            break;
+        case 'button_33':
+            $.yfixtips({
+                time:10,
+                content: 'this tips will last for 10 seconds!'
+            });
+            break;
+        case 'button_44':
+            $.yfixtips({
+                type:'success',
+                content : 'this is a success tips!'
+            });
+            break;
+    }
+});
+    </code>
+</pre>
+<button id="button_00">default tips</button>
+<button id="button_11">center tips</button>
+<button id="button_22">right top tips</button>
+<button id="button_33">tips last for 10s</button>
+<button id="button_44">success tips</button>
+</div>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+        $(function(){
+            window.d1 = $('#button_1').ydialog();
+            window.d2 = $('#button_2').ydialog({
+                vEvent : 'dblclick',
+                simple : true
+            });
+            window.d3 = $('#button_3').ydialog({
+                type : 'alert',
+                simple : true,
+                danger : true,
+                dragable : false,
+                lock : false
+            });
+            window.d4 = $('#button_4').ydialog({
+                title : '加入回调的弹窗',
+                content : '<div style="padding:10px 30px;"><ul style="list-style:disc inside none;"><li>确定按钮按下执行ok与close回调，返回false阻止弹窗关闭</li><li>取消按钮按下执行cancel与close回调，返回false阻止弹窗关闭</li><li>右上角的X按下执行close回调，返回false阻止弹窗关闭</li></ul></div>',
+                ok : function(){
+                    alert('你点击了确定按钮，回调返回false，弹窗不会关闭！');
+                    return false;
+                },
+                cancel : function(){
+                    alert('you clicked cancel');
+                },
+                close : function(){
+                    alert('dialog will closed');
+                }
+            });
+
+            $('#button_5').ydialog({
+                title : '自定义按钮文字',
+                simple : true,
+                time : 5,
+                position : 'absolute',
+                okText : 'Click to confirm',
+                cancelText : 'Click to cancel',
+                content : '这个弹窗拥有自定义按钮文字，并且是绝对定位的，5秒后会自动关闭！'
+            });
+
+            $('#button_6').ydialog({
+                title : '加入init方法的弹窗',
+                content : '弹窗出现后会执行init方法，这在需要弹窗同时发送ajax请求并等待回调时非常合适。本例在弹窗出现3秒后alert',
+                init: function(){
+                    setTimeout(function(){
+                        alert('do something here');
+                    }, 3000);
+                }
+            });
+            $('.tips-button-wrapper').on('click', 'button', function(){
+                var el = $(this);
+                switch(el.attr('id')){
+                    case 'button_00':
+                        $.yfixtips();
+                        break;
+                    case 'button_11':
+                        $.yfixtips({position: 'center'});
+                        break;
+                    case 'button_22':
+                        $.yfixtips({position: 'right-top'});
+                        $.yfixtips
+                        break;
+                    case 'button_33':
+                        $.yfixtips({time:10, content: 'this tips will last for 10 seconds!'});
+                        break;
+                    case 'button_44':
+                        $.yfixtips({type:'success', content : 'this is a success tips!'});
+                        break;
+                }
+            });
+        });
+    </script>
+</html>
