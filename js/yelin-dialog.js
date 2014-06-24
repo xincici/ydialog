@@ -47,9 +47,11 @@
         }
         this.yhide = function(){
             yallElement.hide();
+            return this;
         }
         this.yshow = function(){
             yallElement.show();
+            return this;
         }
         this.element = function(){
             return yallElement;
@@ -59,6 +61,7 @@
                 return dialogElement.find('.dialog_title').html();
             }else{
                 dialogElement.find('.dialog_title').html( arguments[0] );
+                return this;
             }
         }
         this.ycontent = function(){
@@ -67,6 +70,7 @@
             }else{
                 dialogElement.find('.dialog_body').html( arguments[0] );
                 dialogElement.css('height', 'auto');
+                return this;
             }
         }
 
