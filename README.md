@@ -5,14 +5,14 @@ a jQuery based dialog component
 
 #### 功能说明 ####
 
-* 一个简单的基于jQuery的弹窗。  
-* 支持多种特性
+* 一个简单的基于jQuery的弹窗组件。  
+* 支持多种特性。
 
 #### 使用准备 ####
 
-1. 引入 [yelin-dialog.css](https://github.com/xincici/ydialog/blob/css/yelin-dialog.css)
+1. 引入 [yelin-dialog.css](https://github.com/xincici/ydialog/blob/master/css/yelin-dialog.css)
 2. 引入 jQuery v1.4.3以上
-3. 引入 [yelin-dialog.js](https://github.com/xincici/ydialog/blob/js/yelin-dialog.js)
+3. 引入 [yelin-dialog.js](https://github.com/xincici/ydialog/blob/master/js/yelin-dialog.js)
 
 #### 使用指南 ####
 
@@ -66,4 +66,4 @@ var defaultSettings = {
     d1.yshow();             //弹窗元素显示
     d1.yremove();           //弹窗元素移除
 ```
-更多实例请参见 [Demo](https://github.com/xincici/ydialog/blob/index.html)
+更多实例请参见 [Demo](https://github.com/xincici/ydialog/blob/master/index.html)
