@@ -61,14 +61,18 @@
         var closeTimeout;
 
         this.yremove = function(){
-            yallElement.remove();
+            //yallElement.remove();
+            destroyDialog();
         }
         this.yhide = function(){
-            yallElement.hide();
+            if( yallElement.css('display') == 'none' ) return this;
+            destroyDialog( true );
             return this;
         }
         this.yshow = function(){
+            if( yallElement.css('display') == 'block' ) return this;
             yallElement.show();
+            animateElement(dialogElement);
             return this;
         }
         this.element = function(){
@@ -98,11 +102,22 @@
         }
 
         var self = this;
-        this.on(opt.vEvent, function(){
-            showDialog();
-        });
+        if( !this.data('ydialogAlready') ){
+            this.on(opt.vEvent, function(){
+                showDialog();
+            });
+        }
+
+        var _left,_top;
+        var startLeft,startTop;
+
+        var lastStyle;
 
         function showDialog(){
+            if( self.data('ydialogAlready') ){
+                self.yshow();
+                return;
+            }
             function createOverlay(){
                 var str = '';
                 str += '<div class="yoverlay ydialog-element" style="z-index: '+ ($.yzindex++) +';">'
@@ -214,8 +229,6 @@
                 });
             }
 
-            var _left,_top;
-            var startLeft,startTop;
             var $header = dialogElement.find('.dialog_header');
             if( opt.dragable ){
                 $header.on('mousedown', function(e){
@@ -232,33 +245,45 @@
                     $(document).off('mousemove', doDrag);
                 });
             }
-            function doDrag(e){
-                //clear select when mouse move
-                clsSelect();
-                var left = e.pageX;
-                var top = e.pageY;
-                dialogElement.css('left', (_left+left-startLeft)+'px' );
-                dialogElement.css('top', (_top+top-startTop)+'px' );
-            }
             if( opt.time != 0 && $.isNumeric(opt.time) ){
                 closeTimeout = setTimeout(function(){
                     clearTimeout( closeTimeout );
                     destroyDialog();
                 }, parseInt(opt.time, 10)*1000);
             }
-            function destroyDialog(){
-                // dialogElement && dialogElement.remove();
-                // overlayElement && overlayElement.remove();
-                // yallElement && yallElement.remove();
-                if( opt.animate ){
-                    animateElement( dialogElement , true, function(){
+            self.data('ydialogAlready', true);
+        }
+        function doDrag(e){
+            //clear select when mouse move
+            clsSelect();
+            var left = e.pageX;
+            var top = e.pageY;
+            dialogElement.css('left', (_left+left-startLeft)+'px' );
+            dialogElement.css('top', (_top+top-startTop)+'px' );
+        }
+        function destroyDialog( isHide ){
+            // dialogElement && dialogElement.remove();
+            // overlayElement && overlayElement.remove();
+            // yallElement && yallElement.remove();
+            if( opt.animate ){
+                animateElement( dialogElement , true, function(){
+                    if( !isHide ){
                         yallElement && yallElement.remove();
-                    });
-                }else{
+                    }else{
+                        yallElement && yallElement.hide();
+                    }
+                });
+            }else{
+                if( !isHide ){
                     yallElement && yallElement.remove();
+                }else{
+                    yallElement && yallElement.hide();
                 }
+            }
+            if( !isHide ){
                 $(document).off('mousemove', doDrag);
                 closeTimeout && clearTimeout( closeTimeout );
+                self.data('ydialogAlready', false);
             }
         }
         function clsSelect(){
@@ -303,11 +328,22 @@
                 });
             }
             if( opt.animate ){
+                // add new dialog need recount style
+                reCountStyle(el);
                 animateElement(el);
             }
         }
+        function reCountStyle(el){
+            lastStyle = {
+                width : el.css('width'),
+                height : el.css('height'),
+                left : el.css('left'),
+                top : el.css('top'),
+                opacity : 1
+            }
+        }
         function animateElement(el, flag, callback){
-            var lastStyle = {
+            lastStyle = lastStyle ? lastStyle : {
                 width : el.css('width'),
                 height : el.css('height'),
                 left : el.css('left'),
