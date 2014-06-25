@@ -119,7 +119,7 @@ $('#button_6').ydialog({
 });
     </code>
 </pre>
-<button id="button_6">dialog with custom button text</button>
+<button id="button_6" data-title="some text here check if it wrap">dialog with init function</button>
 </div>
 
             </div>
@@ -217,7 +217,7 @@ $('.tips-button-wrapper').on('click', 'button', function(){
                         alert('do something here');
                     }, 3000);
                 }
-            });
+            }).ytips();
             $('.tips-button-wrapper').on('click', 'button', function(){
                 var el = $(this);
                 switch(el.attr('id')){
