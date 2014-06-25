@@ -37,6 +37,24 @@
         };
         var opt = $.extend( {}, defaultSettings, opts );
 
+        // ie6 use absolute position only
+        (function(){
+            var isIE = (function(){
+                var v = 3,
+                    div = document.createElement('div'),
+                    all = div.getElementsByTagName('i');
+                //通过IE检测HTML条件注释方式
+                //循环判断IE浏览器当前支持版本
+                while (
+                    div.innerHTML = '<!--[if gt IE ' + (++v) + ']><i></i><![endif]-->',
+                    all[0]
+                );
+                return v > 4 ? v : undefined;
+            })();
+            if( isIE && isIE < 7){
+                opt.position = 'absolute';
+            }
+        }());
         var overlayElement, dialogElement;
         var yallElement;
 
@@ -259,8 +277,8 @@
             obj.bodyHeight      = document.body.clientHeight;
             obj.visibleWidth    = document.documentElement.clientWidth;
             obj.visibleHeight   = document.documentElement.clientHeight;
-            obj.scrollTop       = document.documentElement.scrollTop;
-            obj.scrollLeft      = document.documentElement.scrollLeft;
+            obj.scrollTop       = document.documentElement.scrollTop || document.body.scrollTop;
+            obj.scrollLeft      = document.documentElement.scrollLeft || document.body.scrollLeft;
             return obj;
         }
         function positionElement(el){
