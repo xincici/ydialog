@@ -19,7 +19,6 @@ a jQuery based dialog component
 ``` javascript
 1. jQuery('selector').ydialog( params );
 2. jQuery.ydialog( params );
-
 ```
 
 #### 参数详解 ####
