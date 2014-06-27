@@ -19,7 +19,6 @@ a jQuery based dialog component
 ``` javascript
 1. jQuery('selector').ydialog( params );
 2. jQuery.ydialog( params );
-
 ```
 
 #### 参数详解 ####
@@ -56,14 +55,14 @@ var defaultSettings = {
 #### 使用实例 ####
 
 ``` javascript
-    var d1 = $('#button_1').ydialog();  //点击id为button_1的按钮时显示默认弹窗
-    d1.ytitle();            //获取弹窗标题
-    d1.ytitle('新标题')     //设置弹窗标题为“新标题”
-    d1.ycontent();          //获取弹窗内容
-    d1.ycontent('新的内容') //设置弹窗内容为“新的内容”
-    d1.element();           //获取弹窗元素（jQuery对象）
-    d1.yhide();             //弹窗元素隐藏
-    d1.yshow();             //弹窗元素显示
-    d1.yremove();           //弹窗元素移除
+var d1 = $('#button_1').ydialog();  //点击id为button_1的按钮时显示默认弹窗
+d1.ytitle();            //获取弹窗标题
+d1.ytitle('新标题')     //设置弹窗标题为“新标题”
+d1.ycontent();          //获取弹窗内容
+d1.ycontent('新的内容') //设置弹窗内容为“新的内容”
+d1.element();           //获取弹窗元素（jQuery对象）
+d1.yhide();             //弹窗元素隐藏
+d1.yshow();             //弹窗元素显示
+d1.yremove();           //弹窗元素移除
 ```
 更多实例请参见 [Demo](https://github.com/xincici/ydialog/blob/master/index.html)
