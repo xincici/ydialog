@@ -102,7 +102,7 @@ $('#button_5').ydialog({
 });
     </code>
 </pre>
-<button id="button_5">dialog with custom button text and auto close</button>
+<button id="button_5" data-title="dialog with custom text and auto close">dialog with custom button text and auto close</button>
 </div>
 
 <div class="example-block">
@@ -162,7 +162,7 @@ $('.tips-button-wrapper').on('click', 'button', function(){
 });
     </code>
 </pre>
-<button id="button_00">default tips</button>
+<button id="button_00" data-title="default tips">default tips</button>
 <button id="button_11">center tips</button>
 <button id="button_22">right top tips</button>
 <button id="button_33">tips last for 10s</button>
@@ -218,7 +218,8 @@ $('.tips-button-wrapper').on('click', 'button', function(){
                         alert('do something here');
                     }, 3000);
                 }
-            }).ytips();
+            });
+            $.ytips();
             $('.tips-button-wrapper').on('click', 'button', function(){
                 var el = $(this);
                 switch(el.attr('id')){
