@@ -1,9 +1,9 @@
 /*
     @author yelin yelin@sohu-inc.com
     @brief : this plugin is based on jquery, inject the jquery namespace with 
-            5 veriable : $.yfixtipstimer, $.ydialog, $.fn.ydialog, $.fn.yfixtips, $.fn.ytips
-            notice : $.ydialog, $.fn.ydialog, $.fn.yfixtips  needs the outer css support, see yelin-dialog.css
-                     and $.fn.ytips has no dependencies except jquery and can be used freely
+            6 veriable : $.yfixtipstimer, $.ydialog, $.fn.ydialog, $.yfixtips, $.fn.ytips, $.ytips
+            notice : $.ydialog, $.fn.ydialog, $.yfixtips  needs the outer css support, see yelin-dialog.css
+                     and $.fn.ytips, $.ytips has no dependencies except jquery and can be used freely
 */
 ;(function($){
     $.yzindex = 2014;
