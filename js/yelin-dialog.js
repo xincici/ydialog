@@ -56,6 +56,7 @@
             }
         }());
         var overlayElement, dialogElement;
+        var waitElement;
         var yallElement;
 
         var closeTimeout;
@@ -63,6 +64,9 @@
         this.yremove = function(){
             //yallElement.remove();
             destroyDialog();
+        }
+        this.yremovewait = function(){
+            waitElement && waitElement.remove();
         }
         this.yhide = function(){
             if( yallElement.css('display') == 'none' ) return this;
@@ -114,7 +118,7 @@
         var lastStyle;
 
         function showDialog(){
-            if( self.data('ydialogAlready') ){
+            if( self && self.data('ydialogAlready') ){
                 self.yshow();
                 return;
             }
@@ -161,7 +165,7 @@
             }
             function createWaitElement( opt ){
                 var str = '';
-                str += '<div class="wait-element ydialog-element" style="z-index: '+ ($.yzindex++) +'; left: 50%; width: 300px; margin: 0 0 0 -150px; color: rgb(255, 255, 255); font-size: 14px;position: fixed; top: 45%;"><img src="img/loading.gif" style="vertical-align:middle;" />'
+                str += '<div class="wait-element ydialog-element" style="z-index: '+ ($.yzindex++) +'; left: 50%; width: 400px; margin: 0 0 0 -200px; color: #fff; font-size: 14px;position: fixed; top: 40%;text-align:center;"><img src="img/loading.gif" style="vertical-align:middle;" />'
                             + '<span style="vertical-align:middle;">'+ opt.waitMsg +'</span>'
                         + '</div>';
                 return str;
@@ -218,7 +222,9 @@
                 }
                 //dialogElement && dialogElement.remove();
                 if( el.hasClass('yconfirm') && !opt.okDelete ){
-                    $(document.body).append( $( createWaitOverlay() ) ).append( $( createWaitElement(opt) ));
+                    waitElement = $( createWaitOverlay() ).add( $( createWaitElement(opt) ) );
+                    yallElement = yallElement.add( waitElement );
+                    $(document.body).append( waitElement );
                 }else{
                     destroyDialog();
                 }
@@ -251,7 +257,7 @@
                     destroyDialog();
                 }, parseInt(opt.time, 10)*1000);
             }
-            self.data('ydialogAlready', true);
+            self && self.data('ydialogAlready', true);
         }
         function doDrag(e){
             //clear select when mouse move
@@ -283,7 +289,7 @@
             if( !isHide ){
                 $(document).off('mousemove', doDrag);
                 closeTimeout && clearTimeout( closeTimeout );
-                self.data('ydialogAlready', false);
+                self && self.data('ydialogAlready', false);
             }
         }
         function clsSelect(){
