@@ -40,7 +40,7 @@ var defaultSettings = {
     ,quickClose : true                  //背景锁定时，是否开启双击背景关闭
     ,id         : ''                    //弹窗元素id
     ,time       : 0                     //自动关闭时间，0为不自动关闭，单位是秒
-    ,width      : 560                   //弹窗宽度
+    ,width      : 480                   //弹窗宽度
     ,maxHeight  : 300                   //内容最大高度，超出部分出现滚动条
     ,init       : function(){}          //弹窗显示后调用初始化方法
     ,ok         : function(){}          //确定回调
