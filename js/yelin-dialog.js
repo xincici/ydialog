@@ -152,8 +152,8 @@
                                     + '</div>'
                                     + '<div class="dialog_footer">'
                                         + '<span class="info-msg"></span>'
-                                        + '<a href="javascript:;" class="btn nbtn nbtn-primary yconfirm">'+ opt.okText +'</a>'
-                                        + (opt.type == 'confirm' ? '<a href="javascript:;" class="btn nbtn nbtn-default ycancel">'+ opt.cancelText +'</a>' : '')
+                                        + '<a href="javascript:;" class="ybtn ybtn-confirm yconfirm">'+ opt.okText +'</a>'
+                                        + (opt.type == 'confirm' ? '<a href="javascript:;" class="ybtn ybtn-cancel ycancel">'+ opt.cancelText +'</a>' : '')
                                     + '</div>'
                                 + '</td>'
                             + '</tr>'

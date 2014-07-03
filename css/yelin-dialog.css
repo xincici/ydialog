@@ -6,8 +6,12 @@
 .ydialog *{margin: 0;padding: 0;}
 .ydialog .pop_dialog_table{border-spacing: 1px;width: 100%; height: 100%; position:relative; z-index:2;}
 
-.ydialog .pop_tl,.dialog .pop_tc,.dialog .pop_tr,
-.ydialog .pop_bl,.dialog .pop_bc,.dialog .pop_br{overflow: hidden; font-size: 0;}
+.ydialog .pop_tl,
+.ydialog .pop_tc,
+.ydialog .pop_tr,
+.ydialog .pop_bl,
+.ydialog .pop_bc,
+.ydialog .pop_br{overflow: hidden; font-size: 0;}
 
 .ydialog .dialog_header{background: #F5F5F5; position: relative; border-bottom: 1px solid #DCDCDC;border-radius:3px 3px 0 0;}
 .ydialog .dialog_header_drag{cursor: pointer;}
@@ -27,21 +31,21 @@
 .ydialog .dialog_body .simple_danger{background-image: url("../img/danger.png");line-height: 1.6;}
 
 .ydialog .dialog_footer{background: #F5F5F5; padding: 4px 10px; text-align: right; border-radius:0 0 3px 3px;}
-.ydialog .dialog_footer .btn{margin-left: 10px;}
+.ydialog .dialog_footer .ybtn{margin-left: 10px;}
 .ydialog .dialog_footer .info-msg{color:#f00; height: 28px;line-height: 28px;float:left;}
 
-.ydialog .dialog_footer .btn{font-size:12px;text-decoration: none; display: inline-block; vertical-align: middle; *display: inline; zoom: 1; position: relative;  padding: 5px 25px; cursor: pointer; text-align: center; overflow: visible;box-shadow: 1px 1px 4px #4A4A4A;}
-.ydialog .dialog_footer .btn:hover{text-decoration: none;text-shadow:1px 1px 4px #fff;}
-.ydialog .dialog_footer .btn:focus{outline: none;}
-.ydialog .dialog_footer .nbtn{height: 18px; line-height: 18px; border-radius: 3px;}
-.ydialog .dialog_footer .nbtn-primary{background: #3293F2; color: #FFF;}
-.ydialog .dialog_footer .nbtn-primary:hover,
-.ydialog .dialog_footer .nbtn-primary:focus{background: #43a4f3;}
-.ydialog .dialog_footer .nbtn-primary:active{background: #2182e1;}
-.ydialog .dialog_footer .nbtn-default{background: #919BA6; color: #FFF;}
-.ydialog .dialog_footer .nbtn-default:hover,
-.ydialog .dialog_footer .nbtn-default:focus{background: #AAB5C2;}
-.ydialog .dialog_footer .nbtn-default:active{background: #808a95;}
+.ydialog .dialog_footer .ybtn{font-size:12px;text-decoration: none; display: inline-block; vertical-align: middle; *display: inline; zoom: 1; position: relative;  padding: 5px 25px; cursor: pointer; text-align: center; overflow: visible;box-shadow: 1px 1px 4px #4A4A4A;}
+.ydialog .dialog_footer .ybtn:hover{text-decoration: none;text-shadow:1px 1px 4px #fff;}
+.ydialog .dialog_footer .ybtn:focus{outline: none;}
+.ydialog .dialog_footer .ybtn{height: 18px; line-height: 18px; border-radius: 3px;}
+.ydialog .dialog_footer .ybtn-confirm{background: #3293F2; color: #FFF;}
+.ydialog .dialog_footer .ybtn-confirm:hover,
+.ydialog .dialog_footer .ybtn-confirm:focus{background: #43a4f3;}
+.ydialog .dialog_footer .ybtn-confirm:active{background: #2182e1;}
+.ydialog .dialog_footer .ybtn-cancel{background: #919BA6; color: #FFF;}
+.ydialog .dialog_footer .ybtn-cancel:hover,
+.ydialog .dialog_footer .ybtn-cancel:focus{background: #AAB5C2;}
+.ydialog .dialog_footer .ybtn-cancel:active{background: #808a95;}
 
 .yfixtips{background:#fff;border:1px solid #999;border-radius:5px 5px 0 0;position:fixed;}
 .yfixtips *{margin: 0;padding: 0;}
