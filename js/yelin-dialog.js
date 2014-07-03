@@ -25,7 +25,7 @@
             ,quickClose : true
             ,id         : ''
             ,time       : 0
-            ,width      : 560
+            ,width      : 480
             ,maxHeight  : 300
             ,init       : function(){}
             ,ok         : function(){}
@@ -147,7 +147,7 @@
                                         + '<a class="dialog_minimize" href="javascript:;" style="display: none;">最小化</a>'
                                         + '<a class="dialog_close yclose" href="javascript:;" title="关闭">关闭</a>'
                                     + '</div>'
-                                    + '<div class="dialog_body" style="'+ (opt.simple ? '':'min-height: 180px;_height:180px;') +'max-height: '+ opt.maxHeight +'px;">'
+                                    + '<div class="dialog_body" style="'+ (opt.simple ? '':'min-height: 100px;_height:100px;') +'max-height: '+ opt.maxHeight +'px;">'
                                         + (opt.simple ? '<div class="simple_wrapper"><div class="simple_inner '+ (opt.danger ? 'simple_danger':'') +'">'+ opt.content +'</div></div>' : opt.content)
                                     + '</div>'
                                     + '<div class="dialog_footer">'
@@ -171,7 +171,7 @@
             }
             function createWaitElement( opt ){
                 var str = '';
-                str += '<div class="wait-element ydialog-element" style="z-index: '+ ($.yzindex++) +'; left: 50%; width: 400px; margin: 0 0 0 -200px; color: #fff; font-size: 14px;position: fixed; top: 40%;text-align:center;"><img src="img/loading.gif" style="vertical-align:middle;" />'
+                str += '<div class="wait-element ydialog-element" style="z-index: '+ ($.yzindex++) +'; left: 50%; width: 400px; margin: 0 0 0 -200px; color: #fff; font-size: 14px;position: fixed; _position:absolute; top: 40%;text-align:center;"><img src="img/loading.gif" style="vertical-align:middle;" />'
                             + '<span style="vertical-align:middle;margin-left:5px;">'+ opt.waitMsg +'</span>'
                         + '</div>';
                 return str;
@@ -323,7 +323,7 @@
             if( opt.position == 'fixed' ){
                 el.css({
                     position : 'fixed',
-                    width : opt.simple ? '450px' : opt.width+'px'
+                    width : opt.simple ? '420px' : opt.width+'px'
                 });
                 el.css({
                     left : ( info.visibleWidth - parseInt(el.css('width').slice(0,-2)) )/2 + 'px',
@@ -332,7 +332,7 @@
             }else{
                 el.css({
                     position : 'absolute',
-                    width : opt.simple ? '450px' : opt.width+'px'
+                    width : opt.simple ? '420px' : opt.width+'px'
                 });
                 el.css({
                     left : ( info.visibleWidth - parseInt(el.css('width').slice(0,-2)) )/2 + 'px',
