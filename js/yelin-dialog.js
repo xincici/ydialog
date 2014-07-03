@@ -91,11 +91,17 @@
             }
         }
         this.ycontent = function(){
-            if( arguments.length == 0 || typeof arguments[0] != 'string' ){
+            if( arguments.length == 0 ){
                 return dialogElement.find('.dialog_body').html();
-            }else{
+            }else if( typeof arguments[0] == 'string' ){
                 dialogElement.find('.dialog_body').html( arguments[0] );
                 dialogElement.css('height', 'auto');
+                return this;
+            }else if( typeof arguments[0] == 'object' ){
+                dialogElement.find('.dialog_body').html('').append( arguments[0] );
+                dialogElement.css('height', 'auto');
+                return this;
+            }else{
                 return this;
             }
         }
@@ -157,7 +163,7 @@
             }
             function createWaitOverlay(){
                 var str = '';
-                    str += '<div class="yoverlay wait-element ydialog-element" style="z-index: '+ ($.yzindex++) +';">'
+                    str += '<div class="yoverlay wait-element ydialog-element" style="z-index: '+ ($.yzindex++) +';opacity:0.6;filter:alpha(opacity=60);">'
                                 + '<iframe width="100%" height="100%" frameborder="0" src="javascript:;"></iframe>'
                                 + '<div></div>'
                             + '</div>'
@@ -166,7 +172,7 @@
             function createWaitElement( opt ){
                 var str = '';
                 str += '<div class="wait-element ydialog-element" style="z-index: '+ ($.yzindex++) +'; left: 50%; width: 400px; margin: 0 0 0 -200px; color: #fff; font-size: 14px;position: fixed; top: 40%;text-align:center;"><img src="img/loading.gif" style="vertical-align:middle;" />'
-                            + '<span style="vertical-align:middle;">'+ opt.waitMsg +'</span>'
+                            + '<span style="vertical-align:middle;margin-left:5px;">'+ opt.waitMsg +'</span>'
                         + '</div>';
                 return str;
             }
