@@ -124,6 +124,7 @@
         var lastStyle;
 
         function showDialog(){
+            //check the dialog already flag to prevent dialog repeat
             if( self && self.data('ydialogAlready') ){
                 self.yshow();
                 return;
@@ -191,7 +192,7 @@
             //clear selection in case of some bugs
             clsSelect();
 
-            // do the init function after dialog elements are append to the document
+            //do the init function after dialog elements are append to the document
             typeof opt.init === 'function' && opt.init();
 
             dialogElement.on('click', function(e){
@@ -226,7 +227,6 @@
                 }else{
                     return;
                 }
-                //dialogElement && dialogElement.remove();
                 if( el.hasClass('yconfirm') && !opt.okDelete ){
                     waitElement = $( createWaitOverlay() ).add( $( createWaitElement(opt) ) );
                     yallElement = yallElement.add( waitElement );
@@ -263,6 +263,7 @@
                     destroyDialog();
                 }, parseInt(opt.time, 10)*1000);
             }
+            // add dialog already show flag to prevent more than one dialog triggered by the same element show together
             self && self.data('ydialogAlready', true);
         }
         function doDrag(e){
