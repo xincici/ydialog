@@ -27,8 +27,8 @@
 .ydialog .dialog_body{background:#FFF; padding:10px;overflow-y:auto;}
 .ydialog .dialog_body .mod-table td{line-height: 20px;}
 
-.ydialog .dialog_body .simple_inner{width: 300px; text-align:left; font-size: 14px; margin: 0 auto; padding: 20px 0 20px 50px;background: url("../img/danger_warn.png") no-repeat scroll left center transparent;}
-.ydialog .dialog_body .simple_danger{background-image: url("../img/danger.png");line-height: 1.6;}
+.ydialog .dialog_body .simple_inner{width: 300px; text-align:left; font-size: 14px; margin: 0 auto; padding: 20px 0 20px 50px;background: url("../img/danger_warn.png") no-repeat scroll left center transparent;line-height: 1.6;}
+.ydialog .dialog_body .simple_danger{background-image: url("../img/danger.png");}
 
 .ydialog .dialog_footer{background: #F5F5F5; padding: 4px 10px; text-align: right; border-radius:0 0 3px 3px;}
 .ydialog .dialog_footer .ybtn{margin-left: 10px;}
