@@ -55,7 +55,8 @@ $('#button_3').ydialog({
     simple : true,
     danger : true,
     dragable : false,
-    lock : false
+    lock : false,
+    content : '这是危险操作，请您确认！'
 });
     </code>
 </pre>
@@ -68,9 +69,10 @@ $('#button_3').ydialog({
 $('#button_4').ydialog({
     title : '加入回调的弹窗',
     content : '&lt;div style="padding:10px 30px;"&gt;&lt;ul style="list-style:
-                disc inside none;"&gt;&lt;li&gt;确定按钮按下执行ok与close回调，
-                返回false阻止弹窗关闭&lt;/li&gt;&lt;li&gt;取消按钮按下执行cancel
-                与close回调，返回false阻止弹窗关闭&lt;/li&gt;&lt;li&gt;右上角的X
+                disc inside none;font-size:12px;line-height:1.8;"&gt;&lt;li&gt;
+                确定按钮按下执行ok与close回调，返回false阻止弹窗关闭&lt;/li&gt;
+                &lt;li&gt;取消按钮按下执行cancel与close回调，
+                返回false阻止弹窗关闭&lt;/li&gt;&lt;li&gt;右上角的X
                 按下执行close回调，返回false阻止弹窗关闭&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;',
     ok : function(){
         alert('你点击了确定按钮，回调返回false，弹窗不会关闭！');
@@ -183,11 +185,12 @@ $('.tips-button-wrapper').on('click', 'button', function(){
                 simple : true,
                 danger : true,
                 dragable : false,
-                lock : false
+                lock : false,
+                content : '这是危险操作，请您确认！'
             });
             window.d4 = $('#button_4').ydialog({
                 title : '加入回调的弹窗',
-                content : '<div style="padding:10px 30px;"><ul style="list-style:disc inside none;"><li>确定按钮按下执行ok与close回调，返回false阻止弹窗关闭</li><li>取消按钮按下执行cancel与close回调，返回false阻止弹窗关闭</li><li>右上角的X按下执行close回调，返回false阻止弹窗关闭</li></ul></div>',
+                content : '<div style="padding:10px 30px;"><ul style="list-style:disc inside none;font-size:12px;line-height:1.8;"><li>确定按钮按下执行ok与close回调，返回false阻止弹窗关闭</li><li>取消按钮按下执行cancel与close回调，返回false阻止弹窗关闭</li><li>右上角的X按下执行close回调，返回false阻止弹窗关闭</li></ul></div>',
                 ok : function(){
                     alert('你点击了确定按钮，回调返回false，弹窗不会关闭！');
                     return false;
