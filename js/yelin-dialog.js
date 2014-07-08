@@ -84,9 +84,9 @@
         }
         this.ytitle = function(){
             if( arguments.length == 0 || typeof arguments[0] != 'string' ){
-                return dialogElement.find('.dialog_title').html();
+                return dialogElement.find('.dialog-title').html();
             }else{
-                dialogElement.find('.dialog_title').html( arguments[0] );
+                dialogElement.find('.dialog-title').html( arguments[0] );
                 return this;
             }
         }
@@ -94,11 +94,11 @@
             if( arguments.length == 0 ){
                 return dialogElement.find('.dialog_body').html();
             }else if( typeof arguments[0] == 'string' ){
-                dialogElement.find('.dialog_body').html( arguments[0] );
+                dialogElement.find('.dialog-body').html( arguments[0] );
                 dialogElement.css('height', 'auto');
                 return this;
             }else if( typeof arguments[0] == 'object' ){
-                dialogElement.find('.dialog_body').html('').append( arguments[0] );
+                dialogElement.find('.dialog-body').html('').append( arguments[0] );
                 dialogElement.css('height', 'auto');
                 return this;
             }else{
@@ -124,6 +124,7 @@
         var lastStyle;
 
         function showDialog(){
+            //check the dialog already flag to prevent dialog repeat
             if( self && self.data('ydialogAlready') ){
                 self.yshow();
                 return;
@@ -139,18 +140,18 @@
             function createElement( opt ){
                 var str = '';
                 str += '<div id="'+ opt.id +'" class="ydialog ydialog-element" style="z-index: '+ ($.yzindex++) +';">'
-                        + '<table class="pop_dialog_table">'
+                        + '<table class="pop-dialog-table">'
                             + '<tr>'
-                                + '<td class="pop_content" colspan="3">'
-                                    + '<div class="dialog_header '+ (opt.dragable ? 'dialog_header_drag':'') +'">'
-                                        + '<i></i><div class="dialog_title">'+ opt.title +'</div>'
-                                        + '<a class="dialog_minimize" href="javascript:;" style="display: none;">最小化</a>'
-                                        + '<a class="dialog_close yclose" href="javascript:;" title="关闭">关闭</a>'
+                                + '<td class="pop-content" colspan="3">'
+                                    + '<div class="dialog-header '+ (opt.dragable ? 'dialog-header-drag':'') +'">'
+                                        + '<i></i><div class="dialog-title">'+ opt.title +'</div>'
+                                        + '<a class="dialog-minimize" href="javascript:;" style="display: none;">最小化</a>'
+                                        + '<a class="dialog-close yclose" href="javascript:;" title="关闭">关闭</a>'
                                     + '</div>'
-                                    + '<div class="dialog_body" style="'+ (opt.simple ? '':'min-height: 100px;_height:100px;') +'max-height: '+ opt.maxHeight +'px;">'
-                                        + (opt.simple ? '<div class="simple_wrapper"><div class="simple_inner '+ (opt.danger ? 'simple_danger':'') +'">'+ opt.content +'</div></div>' : opt.content)
+                                    + '<div class="dialog-body" style="'+ (opt.simple ? '':'min-height: 100px;_height:100px;') +'max-height: '+ opt.maxHeight +'px;">'
+                                        + (opt.simple ? '<div class="simple-wrapper"><div class="simple-inner '+ (opt.danger ? 'simple-danger':'') +'">'+ opt.content +'</div></div>' : opt.content)
                                     + '</div>'
-                                    + '<div class="dialog_footer">'
+                                    + '<div class="dialog-footer">'
                                         + '<span class="info-msg"></span>'
                                         + '<a href="javascript:;" class="ybtn ybtn-confirm yconfirm">'+ opt.okText +'</a>'
                                         + (opt.type == 'confirm' ? '<a href="javascript:;" class="ybtn ybtn-cancel ycancel">'+ opt.cancelText +'</a>' : '')
@@ -191,7 +192,7 @@
             //clear selection in case of some bugs
             clsSelect();
 
-            // do the init function after dialog elements are append to the document
+            //do the init function after dialog elements are append to the document
             typeof opt.init === 'function' && opt.init();
 
             dialogElement.on('click', function(e){
@@ -226,7 +227,6 @@
                 }else{
                     return;
                 }
-                //dialogElement && dialogElement.remove();
                 if( el.hasClass('yconfirm') && !opt.okDelete ){
                     waitElement = $( createWaitOverlay() ).add( $( createWaitElement(opt) ) );
                     yallElement = yallElement.add( waitElement );
@@ -241,10 +241,10 @@
                 });
             }
 
-            var $header = dialogElement.find('.dialog_header');
+            var $header = dialogElement.find('.dialog-header');
             if( opt.dragable ){
                 $header.on('mousedown', function(e){
-                    $header.addClass('dialog_header_move');
+                    $header.addClass('dialog-header-move');
                     _left = parseInt(dialogElement.css('left').slice(0, -2));
                     _top = parseInt(dialogElement.css('top').slice(0, -2));
                     startLeft = e.pageX;
@@ -253,7 +253,7 @@
                         $(document).on('mousemove', doDrag);
                     }
                 }).on('mouseup', function(e){
-                    $header.removeClass('dialog_header_move');
+                    $header.removeClass('dialog-header-move');
                     $(document).off('mousemove', doDrag);
                 });
             }
@@ -263,6 +263,7 @@
                     destroyDialog();
                 }, parseInt(opt.time, 10)*1000);
             }
+            // add dialog already show flag to prevent more than one dialog triggered by the same element show together
             self && self.data('ydialogAlready', true);
         }
         function doDrag(e){
