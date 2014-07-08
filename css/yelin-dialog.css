@@ -4,48 +4,42 @@
 
 .ydialog{background-color: #fff; border: 1px solid #C2C2C2; border-radius: 5px; box-shadow:0px 0px 4px #B4B4B4;}
 .ydialog *{margin: 0;padding: 0;}
-.ydialog .pop_dialog_table{border-spacing: 1px;width: 100%; height: 100%; position:relative; z-index:2;}
+.ydialog .pop-dialog-table{border-spacing: 1px;width: 100%; height: 100%; position:relative; z-index:2;}
 
-.ydialog .pop_tl,
-.ydialog .pop_tc,
-.ydialog .pop_tr,
-.ydialog .pop_bl,
-.ydialog .pop_bc,
-.ydialog .pop_br{overflow: hidden; font-size: 0;}
 
-.ydialog .dialog_header{background: #F5F5F5; position: relative; border-bottom: 1px solid #DCDCDC;border-radius:3px 3px 0 0;}
-.ydialog .dialog_header_drag{cursor: pointer;}
-.ydialog .dialog_header_move{cursor: move;}
-.ydialog .dialog_header .dialog_title{padding: 0 10px; line-height: 32px; color: #373737; font-family: Microsoft Yahei,"黑体"; font-weight: bold; font-size: 14px; border-bottom: 1px solid #FFF; width:80%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
-.ydialog .dialog_header .dialog_close{position: absolute; top: 9px; right: 10px; text-indent: -9999em; outline: none; display: block; height: 16px; width: 16px; background:url("../img/icon-dialog.png") 0 -20px no-repeat;}
-.ydialog .dialog_header .dialog_close:hover{background-position: -20px -20px;}
-.ydialog .dialog_header .dialog_close:active{background-position: -40px -20px;}
-.ydialog .dialog_header .dialog_minimize{position:absolute; top:16px; right:50px; text-indent: -9999em; outline: none; display: block; height: 16px; width: 16px; background: url("../img/icon-dialog.png") 0 0 no-repeat;}
-.ydialog .dialog_header .dialog_minimize:hover{background-position: -20px 0;}
-.ydialog .dialog_header .dialog_minimize:active{background-position: -40px 0;}
+.ydialog .dialog-header{background: #F5F5F5; position: relative; border-bottom: 1px solid #DCDCDC;border-radius:3px 3px 0 0;}
+.ydialog .dialog-header-drag{cursor: pointer;}
+.ydialog .dialog-header-move{cursor: move;}
+.ydialog .dialog-header .dialog-title{padding: 0 10px; line-height: 32px; color: #373737; font-family: Microsoft Yahei,"黑体"; font-weight: bold; font-size: 14px; border-bottom: 1px solid #FFF; width:80%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+.ydialog .dialog-header .dialog-close{position: absolute; top: 9px; right: 10px; text-indent: -9999em; outline: none; display: block; height: 16px; width: 16px; background:url("../img/icon-dialog.png") 0 -20px no-repeat;}
+.ydialog .dialog-header .dialog-close:hover{background-position: -20px -20px;}
+.ydialog .dialog-header .dialog-close:active{background-position: -40px -20px;}
+.ydialog .dialog-header .dialog-minimize{position:absolute; top:16px; right:50px; text-indent: -9999em; outline: none; display: block; height: 16px; width: 16px; background: url("../img/icon-dialog.png") 0 0 no-repeat;}
+.ydialog .dialog-header .dialog-minimize:hover{background-position: -20px 0;}
+.ydialog .dialog-header .dialog-minimize:active{background-position: -40px 0;}
 
-.ydialog .dialog_body{background:#FFF; padding:10px;overflow-y:auto;}
-.ydialog .dialog_body .mod-table td{line-height: 20px;}
+.ydialog .dialog-body{background:#FFF; padding:10px;overflow-y:auto;}
+.ydialog .dialog-body .mod-table td{line-height: 20px;}
 
-.ydialog .dialog_body .simple_inner{width: 300px; text-align:left; font-size: 14px; margin: 0 auto; padding: 20px 0 20px 50px;background: url("../img/danger_warn.png") no-repeat scroll left center transparent;line-height: 1.6;}
-.ydialog .dialog_body .simple_danger{background-image: url("../img/danger.png");}
+.ydialog .dialog-body .simple-inner{width: 300px; text-align:left; font-size: 14px; margin: 0 auto; padding: 20px 0 20px 50px;background: url("../img/danger_warn.png") no-repeat scroll left center transparent;line-height: 1.6;}
+.ydialog .dialog-body .simple-danger{background-image: url("../img/danger.png");}
 
-.ydialog .dialog_footer{background: #F5F5F5; padding: 4px 10px; text-align: right; border-radius:0 0 3px 3px;}
-.ydialog .dialog_footer .ybtn{margin-left: 10px;}
-.ydialog .dialog_footer .info-msg{color:#f00; height: 28px;line-height: 28px;float:left;}
+.ydialog .dialog-footer{background: #F5F5F5; padding: 4px 10px; text-align: right; border-radius:0 0 3px 3px;}
+.ydialog .dialog-footer .ybtn{margin-left: 10px;}
+.ydialog .dialog-footer .info-msg{color:#f00; height: 28px;line-height: 28px;float:left;}
 
-.ydialog .dialog_footer .ybtn{font-size:12px;text-decoration: none; display: inline-block; vertical-align: middle; *display: inline; zoom: 1; position: relative;  padding: 5px 25px; cursor: pointer; text-align: center; overflow: visible;box-shadow: 1px 1px 4px #4A4A4A;}
-.ydialog .dialog_footer .ybtn:hover{text-decoration: none;text-shadow:1px 1px 4px #fff;}
-.ydialog .dialog_footer .ybtn:focus{outline: none;}
-.ydialog .dialog_footer .ybtn{height: 18px; line-height: 18px; border-radius: 3px;}
-.ydialog .dialog_footer .ybtn-confirm{background: #3293F2; color: #FFF;}
-.ydialog .dialog_footer .ybtn-confirm:hover,
-.ydialog .dialog_footer .ybtn-confirm:focus{background: #43a4f3;}
-.ydialog .dialog_footer .ybtn-confirm:active{background: #2182e1;}
-.ydialog .dialog_footer .ybtn-cancel{background: #919BA6; color: #FFF;}
-.ydialog .dialog_footer .ybtn-cancel:hover,
-.ydialog .dialog_footer .ybtn-cancel:focus{background: #AAB5C2;}
-.ydialog .dialog_footer .ybtn-cancel:active{background: #808a95;}
+.ydialog .dialog-footer .ybtn{font-size:12px;text-decoration: none; display: inline-block; vertical-align: middle; *display: inline; zoom: 1; position: relative;  padding: 5px 25px; cursor: pointer; text-align: center; overflow: visible;box-shadow: 1px 1px 4px #4A4A4A;}
+.ydialog .dialog-footer .ybtn:hover{text-decoration: none;text-shadow:1px 1px 4px #fff;}
+.ydialog .dialog-footer .ybtn:focus{outline: none;}
+.ydialog .dialog-footer .ybtn{height: 18px; line-height: 18px; border-radius: 3px;}
+.ydialog .dialog-footer .ybtn-confirm{background: #3293F2; color: #FFF;}
+.ydialog .dialog-footer .ybtn-confirm:hover,
+.ydialog .dialog-footer .ybtn-confirm:focus{background: #43a4f3;}
+.ydialog .dialog-footer .ybtn-confirm:active{background: #2182e1;}
+.ydialog .dialog-footer .ybtn-cancel{background: #919BA6; color: #FFF;}
+.ydialog .dialog-footer .ybtn-cancel:hover,
+.ydialog .dialog-footer .ybtn-cancel:focus{background: #AAB5C2;}
+.ydialog .dialog-footer .ybtn-cancel:active{background: #808a95;}
 
 .yfixtips{background:#fff;border:1px solid #999;border-radius:5px 5px 0 0;position:fixed;}
 .yfixtips *{margin: 0;padding: 0;}
