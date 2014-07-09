@@ -401,7 +401,7 @@
         var defaultSettings = {
             title : '提示消息'
             ,content : '这里是提示内容...'
-            ,time : 2
+            ,time : 3
             ,type : 'error'
             ,lock : false
             ,width : 200
