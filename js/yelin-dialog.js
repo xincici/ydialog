@@ -92,7 +92,7 @@
         }
         this.ycontent = function(){
             if( arguments.length == 0 ){
-                return dialogElement.find('.dialog_body').html();
+                return dialogElement.find('.dialog-body').html();
             }else if( typeof arguments[0] == 'string' ){
                 dialogElement.find('.dialog-body').html( arguments[0] );
                 dialogElement.css('height', 'auto');
@@ -102,7 +102,7 @@
                 dialogElement.css('height', 'auto');
                 return this;
             }else{
-                return this;
+                return dialogElement.find('.dialog-body').html();
             }
         }
 
