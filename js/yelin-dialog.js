@@ -214,15 +214,12 @@
                         if( rval === false ) return;
                         typeof opt.close == 'function' && opt.close();
                     }else{
-                        typeof opt.cancel == 'function' && opt.cancel();
                         typeof opt.close == 'function' && opt.close();
                     }
                 }else if( el.hasClass('yclose') ){
                     if( typeof opt.close == 'function' ){
                         rval = opt.close();
                         if( rval === false ) return;
-                    }else{
-                        typeof opt.close == 'function' && opt.close();
                     }
                 }else{
                     return;
@@ -237,7 +234,7 @@
             });
             if( opt.lock && opt.quickClose ){
                 overlayElement.on('dblclick', function(){
-                    destroyDialog();
+                    dialogElement.find('.yclose').click();
                 });
             }
 
