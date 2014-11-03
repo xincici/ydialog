@@ -65,4 +65,4 @@ d1.yhide();             //弹窗元素隐藏
 d1.yshow();             //弹窗元素显示
 d1.yremove();           //弹窗元素移除
 ```
-更多实例请参见 [Demo](https://github.com/xincici/ydialog/blob/master/index.html)
+更多实例请参见 [ydialog Demo](http://xincici.github.io/ydialog/index.html)
