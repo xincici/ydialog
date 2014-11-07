@@ -193,7 +193,7 @@
             clsSelect();
 
             //do the init function after dialog elements are append to the document
-            typeof opt.init === 'function' && opt.init();
+            typeof opt.init === 'function' && opt.init.call( self );
 
             dialogElement.on('click', function(e){
                 var el = $(e.target);

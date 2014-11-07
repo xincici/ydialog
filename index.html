@@ -112,11 +112,13 @@ $('#button_5').ydialog({
     <code>
 $('#button_6').ydialog({
     title : '加入init方法的弹窗',
-    content : '弹窗出现后会执行init方法，这在需要弹窗同时发送ajax请求并等待回调
-                时非常合适。本例在弹窗出现3秒后alert',
+    content : '弹窗出现后会执行init方法，这在需要弹窗同时发送ajax请求并等
+                待回调时非常合适。本例在弹窗出现3秒后修改标题，init参数的
+                方法中，this指向本弹窗方法的返回对象',
     init: function(){
+        var self = this;
         setTimeout(function(){
-            alert('do something here');
+            self.ytitle('标题已修改');
         }, 3000);
     }
 });
@@ -215,10 +217,11 @@ $('.tips-button-wrapper').on('click', 'button', function(){
 
             $('#button_6').ydialog({
                 title : '加入init方法的弹窗',
-                content : '弹窗出现后会执行init方法，这在需要弹窗同时发送ajax请求并等待回调时非常合适。本例在弹窗出现3秒后alert',
+                content : '弹窗出现后会执行init方法，这在需要弹窗同时发送ajax请求并等待回调时非常合适。本例在弹窗出现3秒后修改标题，init参数的方法中，this指向本弹窗方法的返回对象',
                 init: function(){
+                    var self = this;
                     setTimeout(function(){
-                        alert('do something here');
+                        self.ytitle('标题已修改');
                     }, 3000);
                 }
             });
