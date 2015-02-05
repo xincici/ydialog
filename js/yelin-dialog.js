@@ -6,34 +6,16 @@
 ;(function($){
     $.yzindex = $.yzindex || 2014;
     $.fn.ydialog = function(opts){
-        var defaultSettings = {
-            type        : 'confirm'
-            ,vEvent     : 'click'
-            ,simple     : false
-            ,danger     : false
-            ,dragable   : true
-            ,position   : 'fixed'
-            ,animate    : true
-            ,title      : '提示消息'
-            ,okText     : '确定'
-            ,cancelText : '取消'
-            ,content    : '确定要这么做吗？'
-            ,lock       : true
-            ,quickClose : true
-            ,id         : ''
-            ,time       : 0
-            ,width      : 480
-            ,maxHeight  : 300
-            ,init       : function(){}
-            ,ok         : function(){}
-            ,cancel     : function(){}
-            ,close      : function(){}
-            ,okDelete   : true
-            ,waitTitle  : '操作进行中...'
-            ,waitMsg    : '操作进行中，请稍候...'
-        };
-        var opt = $.extend( {}, defaultSettings, opts );
-
+        return new Dialog( this, opts );
+    };
+    $.ydialog = function(){
+        return $(document).ydialog(arguments[0]);
+    };
+    function Dialog( node, opts ){
+        this.node = node;
+        var opt = $.extend( {}, Dialog.defaultSettings, opts );
+        this.opt = opt;
+        var self = this;
         // ie6 use absolute position only
         (function(){
             var isIE = (function(){
@@ -49,251 +31,314 @@
                 return v > 4 ? v : undefined;
             })();
             if( isIE && isIE < 7){
-                opt.position = 'absolute';
+                self.opt.position = 'absolute';
             }
         }());
-        var overlayElement, dialogElement;
-        var waitElement;
-        var yallElement;
+        this.init();
+    }
+    Dialog.defaultSettings = {
+        type        : 'confirm'
+        ,vEvent     : 'click'
+        ,simple     : false
+        ,danger     : false
+        ,dragable   : true
+        ,position   : 'fixed'
+        ,animate    : true
+        ,title      : '提示消息'
+        ,okText     : '确定'
+        ,cancelText : '取消'
+        ,content    : '确定要这么做吗？'
+        ,lock       : true
+        ,quickClose : true
+        ,id         : ''
+        ,time       : 0
+        ,width      : 480
+        ,maxHeight  : 300
+        ,init       : function(){}
+        ,ok         : function(){}
+        ,cancel     : function(){}
+        ,close      : function(){}
+        ,okDelete   : true
+        ,waitTitle  : '操作进行中...'
+        ,waitMsg    : '操作进行中，请稍候...'
+    };
+    Dialog.prototype = {
+        inDOM : false,
+        overlayElement : null,
+        dialogElement : null,
+        waitElement : null,
+        yallElement : null,
 
-        var closeTimeout;
+        closeTimeout : null,
+        _left : 0,
+        _top : 0,
+        startLeft : 0,
+        startTop : 0,
+        lastStyle : {},
+        reset : function(){
+            this.inDOM = false;
+            this.overlayElement = null;
+            this.dialogElement = null;
+            this.waitElement = null;
+            this.yallElement = null;
+            this.closeTimeout = null;
+            this._left = 0;
+            this._top = 0;
+            this.startLeft = 0;
+            this.startTop = 0;
+            this.lastStyle = {};
+        },
+        init : function(){
+            if( document === this.node[0] ){
+                this.showDialog();
+            }
 
-        this.yremove = function(){
-            //yallElement.remove();
-            destroyDialog();
-        }
-        this.yremovewait = function(){
-            waitElement && waitElement.remove();
-        }
-        this.yhide = function(){
-            if( yallElement.css('display') == 'none' ) return this;
-            destroyDialog( true );
+            var self = this;
+            if( !this.node.data('ydialogAlready') ){
+                this.node.on(this.opt.vEvent, function(){
+                    self.showDialog();
+                });
+            }
+
+        },
+        throwNotInDOM : function(){
+            if( !this.inDOM ){
+                throw new Error('Dialog not in DOM, check your logic pls!');
+            }
+        },
+        visible : function(){
+            return !!(this.inDOM && this.yallElement.css('display') == 'block');
+        },
+        yremove : function(){
+            this.throwNotInDOM();
+            this.destroyDialog();
+        },
+        yremovewait : function(){
+            this.throwNotInDOM();
+            this.waitElement && this.waitElement.remove();
+        },
+        yhide : function(){
+            this.throwNotInDOM();
+            if( this.yallElement.css('display') == 'none' ) return this;
+            this.destroyDialog( true );
             return this;
-        }
-        this.yshow = function(){
-            if( yallElement.css('display') == 'block' ) return this;
-            yallElement.show();
-            animateElement(dialogElement);
+        },
+        yshow : function(){
+            this.throwNotInDOM();
+            if( this.yallElement.css('display') == 'block' ) return this;
+            this.yallElement.show();
+            this.animateElement(this.dialogElement);
             return this;
-        }
-        this.element = function(){
-            return yallElement;
-        }
-        this.ytitle = function(){
+        },
+        element : function(){
+            this.throwNotInDOM();
+            return this.yallElement;
+        },
+        ytitle : function(){
+            this.throwNotInDOM();
             if( arguments.length == 0 || typeof arguments[0] != 'string' ){
-                return dialogElement.find('.dialog-title').html();
+                return this.dialogElement.find('.dialog-title').html();
             }else{
-                dialogElement.find('.dialog-title').html( arguments[0] );
+                this.dialogElement.find('.dialog-title').html( arguments[0] );
                 return this;
             }
-        }
-        this.ycontent = function(){
+        },
+        ycontent : function(){
+            this.throwNotInDOM();
             if( arguments.length == 0 ){
-                return dialogElement.find('.dialog-body').html();
+                return this.dialogElement.find('.dialog-body').html();
             }else if( typeof arguments[0] == 'string' ){
-                dialogElement.find('.dialog-body').html( arguments[0] );
-                dialogElement.css('height', 'auto');
+                this.dialogElement.find('.dialog-body').html( arguments[0] );
+                this.dialogElement.css('height', 'auto');
                 return this;
             }else if( typeof arguments[0] == 'object' ){
-                dialogElement.find('.dialog-body').html('').append( arguments[0] );
-                dialogElement.css('height', 'auto');
+                this.dialogElement.find('.dialog-body').html('').append( arguments[0] );
+                this.dialogElement.css('height', 'auto');
                 return this;
             }else{
-                return dialogElement.find('.dialog-body').html();
+                return this.dialogElement.find('.dialog-body').html();
             }
-        }
-
-        if( document === this[0] ){
-            showDialog();
-            return this;
-        }
-
-        var self = this;
-        if( !this.data('ydialogAlready') ){
-            this.on(opt.vEvent, function(){
-                showDialog();
-            });
-        }
-
-        var _left,_top;
-        var startLeft,startTop;
-
-        var lastStyle;
-
-        function showDialog(){
+        },
+        showDialog : function(){
+            var self = this;
             //check the dialog already flag to prevent dialog repeat
-            if( self && self.data('ydialogAlready') ){
+            if( self && self.node.data('ydialogAlready') ){
                 self.yshow();
                 return;
             }
-            function createOverlay(){
-                var str = '';
-                str += '<div class="yoverlay ydialog-element" style="z-index: '+ ($.yzindex++) +';">'
-                            + '<iframe width="100%" height="100%" frameborder="0" src="javascript:;"></iframe>'
-                            + '<div></div>'
-                        + '</div>';
-                return str;
-            }
-            function createElement( opt ){
-                var str = '';
-                str += '<div id="'+ opt.id +'" class="ydialog ydialog-element" style="z-index: '+ ($.yzindex++) +';">'
-                        + '<table class="pop-dialog-table">'
-                            + '<tr>'
-                                + '<td class="pop-content" colspan="3">'
-                                    + '<div class="dialog-header '+ (opt.dragable ? 'dialog-header-drag':'') +'">'
-                                        + '<i></i><div class="dialog-title">'+ opt.title +'</div>'
-                                        + '<a class="dialog-minimize" href="javascript:;" style="display: none;">最小化</a>'
-                                        + '<a class="dialog-close yclose" href="javascript:;" title="关闭">关闭</a>'
-                                    + '</div>'
-                                    + '<div class="dialog-body" style="'+ (opt.simple ? '':'min-height: 100px;_height:100px;') +'max-height: '+ opt.maxHeight +'px;">'
-                                        + (opt.simple ? '<div class="simple-wrapper"><div class="simple-inner '+ (opt.danger ? 'simple-danger':'') +'">'+ opt.content +'</div></div>' : opt.content)
-                                    + '</div>'
-                                    + '<div class="dialog-footer">'
-                                        + '<span class="info-msg"></span>'
-                                        + '<a href="javascript:;" class="ybtn ybtn-confirm yconfirm">'+ opt.okText +'</a>'
-                                        + (opt.type == 'confirm' ? '<a href="javascript:;" class="ybtn ybtn-cancel ycancel">'+ opt.cancelText +'</a>' : '')
-                                    + '</div>'
-                                + '</td>'
-                            + '</tr>'
-                        + '</table>'
-                    + '</div>';
-                return str;
-            }
-            function createWaitOverlay(){
-                var str = '';
-                    str += '<div class="yoverlay wait-element ydialog-element" style="z-index: '+ ($.yzindex++) +';opacity:0.6;filter:alpha(opacity=60);">'
-                                + '<iframe width="100%" height="100%" frameborder="0" src="javascript:;"></iframe>'
-                                + '<div></div>'
-                            + '</div>'
-                return str;
-            }
-            function createWaitElement( opt ){
-                var str = '';
-                str += '<div class="wait-element ydialog-element" style="z-index: '+ ($.yzindex++) +'; left: 50%; width: 400px; margin: 0 0 0 -200px; color: #fff; font-size: 14px;position: fixed; _position:absolute; top: 40%;text-align:center;"><img src="img/loading.gif" style="vertical-align:middle;" />'
-                            + '<span style="vertical-align:middle;margin-left:5px;">'+ opt.waitMsg +'</span>'
-                        + '</div>';
-                return str;
-            }
 
-            overlayElement = opt.lock ? $( createOverlay() ) : $('');
+            this.overlayElement = this.opt.lock ? $( this.createOverlay() ) : $('');
 
-            dialogElement = $( createElement(opt) );
+            this.dialogElement = $( this.createElement() );
 
-            yallElement = overlayElement.add( dialogElement );
+            this.yallElement = this.overlayElement.add( this.dialogElement );
 
-            $(document.body).append( yallElement );
+            $(document.body).append( this.yallElement );
 
             //make the elements right position
-            positionElement( dialogElement );
+            this.positionElement( this.dialogElement );
+            this.inDOM = true;
             
             //clear selection in case of some bugs
-            clsSelect();
+            this.clsSelect();
 
             //do the init function after dialog elements are append to the document
-            typeof opt.init === 'function' && opt.init.call( self );
+            typeof this.opt.init === 'function' && this.opt.init.call( this );
 
-            dialogElement.on('click', function(e){
+            this.dialogElement.on('click', function(e){
                 var el = $(e.target);
                 var rval;
                 if( el.hasClass('yconfirm') ){
-                    if( typeof opt.ok == 'function' ){
-                        rval = opt.ok();
+                    if( typeof self.opt.ok == 'function' ){
+                        rval = self.opt.ok();
                         if( rval === false ) return;
-                        if( opt.okDelete != false ){
-                        	typeof opt.close == 'function' && opt.close();
+                        if( self.opt.okDelete != false ){
+                            typeof self.opt.close == 'function' && self.opt.close();
                         }
                     }else{
-                        typeof opt.close == 'function' && opt.close();
+                        typeof self.opt.close == 'function' && self.opt.close();
                     }
                 }else if( el.hasClass('ycancel') ){
-                    if( typeof opt.cancel == 'function' ){
-                        rval = opt.cancel();
+                    if( typeof self.opt.cancel == 'function' ){
+                        rval = self.opt.cancel();
                         if( rval === false ) return;
-                        typeof opt.close == 'function' && opt.close();
+                        typeof self.opt.close == 'function' && self.opt.close();
                     }else{
-                        typeof opt.close == 'function' && opt.close();
+                        typeof self.opt.close == 'function' && self.opt.close();
                     }
                 }else if( el.hasClass('yclose') ){
-                    if( typeof opt.close == 'function' ){
-                        rval = opt.close();
+                    if( typeof self.opt.close == 'function' ){
+                        rval = self.opt.close();
                         if( rval === false ) return;
                     }
                 }else{
                     return;
                 }
-                if( el.hasClass('yconfirm') && !opt.okDelete ){
-                    waitElement = $( createWaitOverlay() ).add( $( createWaitElement(opt) ) );
-                    yallElement = yallElement.add( waitElement );
-                    $(document.body).append( waitElement );
+                if( el.hasClass('yconfirm') && !self.opt.okDelete ){
+                    self.waitElement = $( self.createWaitOverlay() ).add( $( self.createWaitElement() ) );
+                    self.yallElement = self.yallElement.add( self.waitElement );
+                    $(document.body).append( self.waitElement );
                 }else{
-                    destroyDialog();
+                    self.destroyDialog();
                 }
             });
-            if( opt.lock && opt.quickClose ){
-                overlayElement.on('dblclick', function(){
-                    dialogElement.find('.yclose').click();
+            if( self.opt.lock && self.opt.quickClose ){
+                self.overlayElement.on('dblclick', function(){
+                    self.dialogElement.find('.yclose').click();
                 });
             }
 
-            var $header = dialogElement.find('.dialog-header');
-            if( opt.dragable ){
+            var $header = this.dialogElement.find('.dialog-header');
+            if( self.opt.dragable ){
                 $header.on('mousedown', function(e){
                     $header.addClass('dialog-header-move');
-                    _left = parseInt(dialogElement.css('left').slice(0, -2));
-                    _top = parseInt(dialogElement.css('top').slice(0, -2));
-                    startLeft = e.pageX;
-                    startTop = e.pageY;
+                    self._left = parseInt(self.dialogElement.css('left').slice(0, -2));
+                    self._top = parseInt(self.dialogElement.css('top').slice(0, -2));
+                    self.startLeft = e.pageX;
+                    self.startTop = e.pageY;
                     if( !$(e.target).hasClass('yclose') ){
-                        $(document).on('mousemove', doDrag);
+                        $(document).on('mousemove.ydialog', self.doDrag.bind(self));
                     }
                 }).on('mouseup', function(e){
                     $header.removeClass('dialog-header-move');
-                    $(document).off('mousemove', doDrag);
+                    $(document).off('mousemove.ydialog');
                 });
             }
-            if( opt.time != 0 && $.isNumeric(opt.time) ){
-                closeTimeout = setTimeout(function(){
-                    clearTimeout( closeTimeout );
-                    destroyDialog();
-                }, parseInt(opt.time, 10)*1000);
+            if( self.opt.time != 0 && $.isNumeric(self.opt.time) ){
+                self.closeTimeout = setTimeout(function(){
+                    clearTimeout( self.closeTimeout );
+                    self.destroyDialog();
+                }, parseInt(self.opt.time, 10)*1000);
             }
             // add dialog already show flag to prevent more than one dialog triggered by the same element show together
-            self && self.data('ydialogAlready', true);
-        }
-        function doDrag(e){
+            self && self.node.data('ydialogAlready', true);
+        },
+
+        createOverlay :function(){
+            var str = '';
+            str += '<div class="yoverlay ydialog-element" style="z-index: '+ ($.yzindex++) +';">'
+                        + '<iframe width="100%" height="100%" frameborder="0" src="javascript:;"></iframe>'
+                        + '<div></div>'
+                    + '</div>';
+            return str;
+        },
+        createElement :function(){
+            var str = '';
+            str += '<div id="'+ this.opt.id +'" class="ydialog ydialog-element" style="z-index: '+ ($.yzindex++) +';">'
+                    + '<table class="pop-dialog-table">'
+                        + '<tr>'
+                            + '<td class="pop-content" colspan="3">'
+                                + '<div class="dialog-header '+ (this.opt.dragable ? 'dialog-header-drag':'') +'">'
+                                    + '<i></i><div class="dialog-title">'+ this.opt.title +'</div>'
+                                    + '<a class="dialog-minimize" href="javascript:;" style="display: none;">最小化</a>'
+                                    + '<a class="dialog-close yclose" href="javascript:;" title="关闭">关闭</a>'
+                                + '</div>'
+                                + '<div class="dialog-body" style="'+ (this.opt.simple ? '':'min-height: 100px;_height:100px;') +'max-height: '+ this.opt.maxHeight +'px;">'
+                                    + (this.opt.simple ? '<div class="simple-wrapper"><div class="simple-inner '+ (this.opt.danger ? 'simple-danger':'') +'">'+ this.opt.content +'</div></div>' : this.opt.content)
+                                + '</div>'
+                                + '<div class="dialog-footer">'
+                                    + '<span class="info-msg"></span>'
+                                    + '<a href="javascript:;" class="ybtn ybtn-confirm yconfirm">'+ this.opt.okText +'</a>'
+                                    + (this.opt.type == 'confirm' ? '<a href="javascript:;" class="ybtn ybtn-cancel ycancel">'+ this.opt.cancelText +'</a>' : '')
+                                + '</div>'
+                            + '</td>'
+                        + '</tr>'
+                    + '</table>'
+                + '</div>';
+            return str;
+        },
+        createWaitOverlay :function(){
+            var str = '';
+                str += '<div class="yoverlay wait-element ydialog-element" style="z-index: '+ ($.yzindex++) +';opacity:0.6;filter:alpha(opacity=60);">'
+                            + '<iframe width="100%" height="100%" frameborder="0" src="javascript:;"></iframe>'
+                            + '<div></div>'
+                        + '</div>'
+            return str;
+        },
+        createWaitElement :function(){
+            var str = '';
+            str += '<div class="wait-element ydialog-element" style="z-index: '+ ($.yzindex++) +'; left: 50%; width: 400px; margin: 0 0 0 -200px; color: #fff; font-size: 14px;position: fixed; _position:absolute; top: 40%;text-align:center;"><img src="img/loading.gif" style="vertical-align:middle;" />'
+                        + '<span style="vertical-align:middle;margin-left:5px;">'+ this.opt.waitMsg +'</span>'
+                    + '</div>';
+            return str;
+        },
+        doDrag : function(e){
             //clear select when mouse move
-            clsSelect();
+            this.clsSelect();
             var left = e.pageX;
             var top = e.pageY;
-            dialogElement.css('left', (_left+left-startLeft)+'px' );
-            dialogElement.css('top', (_top+top-startTop)+'px' );
-        }
-        function destroyDialog( isHide ){
+            this.dialogElement.css('left', (this._left + left - this.startLeft) + 'px' );
+            this.dialogElement.css('top', (this._top + top - this.startTop) + 'px' );
+        },
+        destroyDialog : function( isHide ){
             // dialogElement && dialogElement.remove();
             // overlayElement && overlayElement.remove();
             // yallElement && yallElement.remove();
-            if( opt.animate ){
-                animateElement( dialogElement , true, function(){
+            var self = this;
+            if( this.opt.animate ){
+                this.animateElement( this.dialogElement , true, function(){
                     if( !isHide ){
-                        yallElement && yallElement.remove();
+                        self.yallElement && self.yallElement.remove();
+                        self.reset();
                     }else{
-                        yallElement && yallElement.hide();
+                        self.yallElement && self.yallElement.hide();
                     }
                 });
             }else{
                 if( !isHide ){
-                    yallElement && yallElement.remove();
+                    self.yallElement && self.yallElement.remove();
+                    self.reset();
                 }else{
-                    yallElement && yallElement.hide();
+                    self.yallElement && self.yallElement.hide();
                 }
             }
             if( !isHide ){
-                $(document).off('mousemove', doDrag);
-                closeTimeout && clearTimeout( closeTimeout );
-                self && self.data('ydialogAlready', false);
+                $(document).off('mousemove.ydialog');
+                self.closeTimeout && clearTimeout( self.closeTimeout );
+                self && self.node.data('ydialogAlready', false);
             }
-        }
-        function clsSelect(){
+        },
+        clsSelect : function(){
             if( 'getSelection' in window ){
                 window.getSelection().removeAllRanges();
             }else{
@@ -301,9 +346,9 @@
                     document.selection.empty();
                 } catch (e) {}
             }
-        }
+        },
         //not for quirks mode page
-        function getInfo(){
+        getInfo :function(){
             var obj = {};
             obj.bodyWidth       = document.body.clientWidth;
             obj.bodyHeight      = document.body.clientHeight;
@@ -312,13 +357,13 @@
             obj.scrollTop       = document.documentElement.scrollTop || document.body.scrollTop;
             obj.scrollLeft      = document.documentElement.scrollLeft || document.body.scrollLeft;
             return obj;
-        }
-        function positionElement(el){
-            var info = getInfo();
-            if( opt.position == 'fixed' ){
+        },
+        positionElement : function(el){
+            var info = this.getInfo();
+            if( this.opt.position == 'fixed' ){
                 el.css({
                     position : 'fixed',
-                    width : opt.simple ? '420px' : opt.width+'px'
+                    width : this.opt.simple ? '420px' : this.opt.width+'px'
                 });
                 el.css({
                     left : ( info.visibleWidth - parseInt(el.css('width').slice(0,-2)) )/2 + 'px',
@@ -327,30 +372,30 @@
             }else{
                 el.css({
                     position : 'absolute',
-                    width : opt.simple ? '420px' : opt.width+'px'
+                    width : this.opt.simple ? '420px' : this.opt.width+'px'
                 });
                 el.css({
                     left : ( info.visibleWidth - parseInt(el.css('width').slice(0,-2)) )/2 + 'px',
                     top : ( ( info.visibleHeight*0.8 - parseInt(el.css('height').slice(0,-2)) )/2 + info.scrollTop ) + 'px'
                 });
             }
-            if( opt.animate ){
+            if( this.opt.animate ){
                 // add new dialog need recount style
-                reCountStyle(el);
-                animateElement(el);
+                this.reCountStyle(el);
+                this.animateElement(el);
             }
-        }
-        function reCountStyle(el){
-            lastStyle = {
+        },
+        reCountStyle : function(el){
+            this.lastStyle = {
                 width : el.css('width'),
                 height : el.css('height'),
                 left : el.css('left'),
                 top : el.css('top'),
                 opacity : 1
-            }
-        }
-        function animateElement(el, flag, callback){
-            lastStyle = lastStyle ? lastStyle : {
+            };
+        },
+        animateElement :function(el, flag, callback){
+            this.lastStyle = this.lastStyle ? this.lastStyle : {
                 width : el.css('width'),
                 height : el.css('height'),
                 left : el.css('left'),
@@ -362,7 +407,7 @@
                     width : '1px',
                     height : '1px',
                     left : '50%',
-                    top : parseInt( lastStyle.top.slice(0,-2) ) + parseInt(lastStyle.height.slice(0,-2))/2,
+                    top : parseInt( this.lastStyle.top.slice(0,-2) ) + parseInt(this.lastStyle.height.slice(0,-2))/2,
                     opacity : 0.1
                 }, 250, function(){
                     typeof callback == 'function' && callback();
@@ -372,16 +417,12 @@
                     width : '1px',
                     height : '1px',
                     left : '50%',
-                    top : parseInt( lastStyle.top.slice(0,-2) ) + parseInt(lastStyle.height.slice(0,-2))/2,
+                    top : parseInt( this.lastStyle.top.slice(0,-2) ) + parseInt(this.lastStyle.height.slice(0,-2))/2,
                     opacity : 0.1
                 });
-                el.animate( lastStyle, 250);
+                el.animate( this.lastStyle, 250);
             }
         }
-        return this;
-    };
-    $.ydialog = function(){
-        return $(document).ydialog(arguments[0]);
     };
 }(jQuery || $));
 
