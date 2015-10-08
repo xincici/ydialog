@@ -31,7 +31,7 @@
 .ydialog .dialog-footer .ybtn{font-size:12px;text-decoration: none; display: inline-block; vertical-align: middle; *display: inline; zoom: 1; position: relative;  padding: 5px 25px; cursor: pointer; text-align: center; overflow: visible;box-shadow: 1px 1px 4px #4A4A4A;}
 .ydialog .dialog-footer .ybtn:hover{text-decoration: none;text-shadow:1px 1px 4px #fff;}
 .ydialog .dialog-footer .ybtn:focus{outline: none;}
-.ydialog .dialog-footer .ybtn{height: 18px; line-height: 18px; border-radius: 3px;}
+.ydialog .dialog-footer .ybtn{height: 18px; line-height: 18px; border-radius: 3px; box-sizing: content-box;}
 .ydialog .dialog-footer .ybtn-confirm{background: #3293F2; color: #FFF;}
 .ydialog .dialog-footer .ybtn-confirm:hover,
 .ydialog .dialog-footer .ybtn-confirm:focus{background: #43a4f3;}
