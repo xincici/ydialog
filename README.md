@@ -53,7 +53,7 @@ var defaultSettings = {
 ```
 #### 注意事项 ####
   - init, ok, cancel, close 方法执行的 this 均指向调用 ydialog 方法后的返回对象 
-  - ok, calcel, close 方法，显示的 return false 可阻止弹窗关闭 
+  - ok, cancel, close 方法，显示的 return false 可阻止弹窗关闭 
 
 #### 使用实例 ####
 
