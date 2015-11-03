@@ -190,7 +190,7 @@
                 var rval;
                 if( el.hasClass('yconfirm') ){
                     if( typeof self.opt.ok == 'function' ){
-                        rval = self.opt.ok();
+                        rval = self.opt.ok.call( self );
                         if( rval === false ) return;
                         if( self.opt.okDelete != false ){
                             typeof self.opt.close == 'function' && self.opt.close();
@@ -200,7 +200,7 @@
                     }
                 }else if( el.hasClass('ycancel') ){
                     if( typeof self.opt.cancel == 'function' ){
-                        rval = self.opt.cancel();
+                        rval = self.opt.cancel.call( self );
                         if( rval === false ) return;
                         typeof self.opt.close == 'function' && self.opt.close();
                     }else{
@@ -208,7 +208,7 @@
                     }
                 }else if( el.hasClass('yclose') ){
                     if( typeof self.opt.close == 'function' ){
-                        rval = self.opt.close();
+                        rval = self.opt.close.call( self );
                         if( rval === false ) return;
                     }
                 }else{

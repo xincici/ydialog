@@ -51,6 +51,9 @@ var defaultSettings = {
     ,waitMsg    : '操作进行中，请稍候...'//等待消息内容
 };
 ```
+#### 注意事项 ####
+  - init, ok, cancel, close 方法执行的 this 均指向调用 ydialog 方法后的返回对象 
+  - ok, calcel, close 方法，显示的 return false 可阻止弹窗关闭 
 
 #### 使用实例 ####
 
@@ -64,5 +67,6 @@ d1.element();           //获取弹窗元素（jQuery对象）
 d1.yhide();             //弹窗元素隐藏
 d1.yshow();             //弹窗元素显示
 d1.yremove();           //弹窗元素移除
+d1.yremovewati();       //弹窗等待信息移除
 ```
 更多实例请参见 [ydialog Demo](http://xincici.github.io/ydialog/index.html)
