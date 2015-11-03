@@ -47,13 +47,12 @@ var defaultSettings = {
     ,cancel     : function(){}          //取消回调
     ,close      : function(){}          //点击关闭按钮回调
     ,okDelete   : true                  //点击确定时是否立刻关闭弹窗
-    ,waitTitle  : '操作进行中...'       //okDelete为false时，显示等待消息标题
     ,waitMsg    : '操作进行中，请稍候...'//等待消息内容
 };
 ```
 #### 注意事项 ####
   - init, ok, cancel, close 方法执行的 this 均指向调用 ydialog 方法后的返回对象 
-  - ok, cancel, close 方法，显示的 return false 可阻止弹窗关闭 
+  - ok, cancel, close 方法，显式的 return false 均可阻止弹窗关闭 
 
 #### 使用实例 ####
 
@@ -67,6 +66,6 @@ d1.element();           //获取弹窗元素（jQuery对象）
 d1.yhide();             //弹窗元素隐藏
 d1.yshow();             //弹窗元素显示
 d1.yremove();           //弹窗元素移除
-d1.yremovewati();       //弹窗等待信息移除
+d1.yremovewait();       //弹窗等待信息移除
 ```
 更多实例请参见 [ydialog Demo](http://xincici.github.io/ydialog/index.html)

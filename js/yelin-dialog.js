@@ -59,7 +59,6 @@
         ,cancel     : function(){}
         ,close      : function(){}
         ,okDelete   : true
-        ,waitTitle  : '操作进行中...'
         ,waitMsg    : '操作进行中，请稍候...'
     };
     Dialog.prototype = {
