@@ -192,18 +192,18 @@
                         rval = self.opt.ok.call( self );
                         if( rval === false ) return;
                         if( self.opt.okDelete != false ){
-                            typeof self.opt.close == 'function' && self.opt.close();
+                            typeof self.opt.close == 'function' && self.opt.close.call( self );
                         }
                     }else{
-                        typeof self.opt.close == 'function' && self.opt.close();
+                        typeof self.opt.close == 'function' && self.opt.close.call( self );
                     }
                 }else if( el.hasClass('ycancel') ){
                     if( typeof self.opt.cancel == 'function' ){
                         rval = self.opt.cancel.call( self );
                         if( rval === false ) return;
-                        typeof self.opt.close == 'function' && self.opt.close();
+                        typeof self.opt.close == 'function' && self.opt.close.call( self );
                     }else{
-                        typeof self.opt.close == 'function' && self.opt.close();
+                        typeof self.opt.close == 'function' && self.opt.close.call( self );
                     }
                 }else if( el.hasClass('yclose') ){
                     if( typeof self.opt.close == 'function' ){
